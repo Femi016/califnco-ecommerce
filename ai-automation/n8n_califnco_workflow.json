@@ -1,0 +1,203 @@
+{
+  "name": "Califnco Daily Instagram & WhatsApp AI Auto-Poster",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * *"
+            }
+          ]
+        }
+      },
+      "id": "node-cron-schedule",
+      "name": "Daily at 9:00 AM IST",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "filePath": "./products_feed.json"
+      },
+      "id": "node-read-products",
+      "name": "Read Product Catalog Feed",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pick daily product based on day of year\nconst products = JSON.parse($input.first().json.data);\nconst dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);\nconst product = products[dayOfYear % products.length];\nreturn [{ json: product }];"
+      },
+      "id": "node-pick-product",
+      "name": "Select Daily Featured Product",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$env.GROQ_API_KEY || 'demo_key'}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "llama-3.3-70b-versatile"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\": \"system\", \"content\": \"You are a professional social media marketing copywriter for Califnco Water Systems India. Write an engaging, high-converting Instagram caption with emojis and 15 targeted hashtags. Emphasize health, pure water, and product specifications. Call to action: Visit califnco.com or DM for dealer pricing.\"}, {\"role\": \"user\", \"content\": \"Write Instagram post caption for: {{$json.name}}, Category: {{$json.category}}, Price: Rs.{{$json.price}}, Key Feature: {{$json.highlight}}, Ideal For: {{$json.idealFor}}\"}]"
+            }
+          ]
+        }
+      },
+      "id": "node-gemini-groq-caption",
+      "name": "Generate AI Caption (Groq/Gemini)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "url": "=https://image.pollinations.ai/prompt/commercial%20water%20purifier%20product%20photography%20studio%20clean%20background%20high%20end%20appliances%20water%20droplets%20{{encodeURIComponent($json.name)}}?width=1080&height=1080&nologo=true"
+      },
+      "id": "node-ai-image-gen",
+      "name": "Generate AI Image (Pollinations/HuggingFace)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [900, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v19.0/{{$env.INSTAGRAM_ACCOUNT_ID || '17841400000000000'}}/media",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{$node['Generate AI Image (Pollinations/HuggingFace)'].json.url || 'https://image.pollinations.ai/prompt/water%20purifier?width=1080&height=1080'}}"
+            },
+            {
+              "name": "caption",
+              "value": "={{$node['Generate AI Caption (Groq/Gemini)'].json.choices[0].message.content}}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{$env.META_GRAPH_ACCESS_TOKEN}}"
+            }
+          ]
+        }
+      },
+      "id": "node-instagram-publish",
+      "name": "Instagram Meta Graph API Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1140, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://waha:3000/api/sendText",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chatId",
+              "value": "status@broadcast"
+            },
+            {
+              "name": "text",
+              "value": "=Califnco Daily Deal 💧\n{{$node['Select Daily Featured Product'].json.name}}\nWholesale & Retail: Rs.{{$node['Select Daily Featured Product'].json.price}}\n\nOrder in Califnco App or DM us!"
+            }
+          ]
+        }
+      },
+      "id": "node-waha-whatsapp-status",
+      "name": "WAHA WhatsApp Status (+10 Bonus)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1140, 400]
+    }
+  ],
+  "connections": {
+    "Daily at 9:00 AM IST": {
+      "main": [
+        [
+          {
+            "node": "Read Product Catalog Feed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Product Catalog Feed": {
+      "main": [
+        [
+          {
+            "node": "Select Daily Featured Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Daily Featured Product": {
+      "main": [
+        [
+          {
+            "node": "Generate AI Caption (Groq/Gemini)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Generate AI Image (Pollinations/HuggingFace)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate AI Caption (Groq/Gemini)": {
+      "main": [
+        [
+          {
+            "node": "Instagram Meta Graph API Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate AI Image (Pollinations/HuggingFace)": {
+      "main": [
+        [
+          {
+            "node": "WAHA WhatsApp Status (+10 Bonus)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Califnco Water Systems — Admin & Operations Console</title>
+  <!-- Tailwind CSS CDN for instant clean styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#F0F9FF',
+              100: '#E0F2FE',
+              500: '#0EA5E9',
+              600: '#0284C7',
+              700: '#0369A1',
+              900: '#0C4A6E'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- Top Navigation Bar -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+          <i data-lucide="droplet" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xl font-extrabold tracking-tight text-slate-900">Califnco</span>
+            <span class="text-xs font-bold uppercase tracking-wider bg-brand-100 text-brand-700 px-2 py-0.5 rounded">Admin Console</span>
+          </div>
+          <p class="text-xs text-slate-500">Enterprise Water Purifier & Wholesale Operations</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Live Vercel Production
+        </span>
+        <div class="flex items-center gap-2 pl-4 border-l border-slate-200">
+          <div class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs">
+            CA
+          </div>
+          <div class="hidden sm:block text-left">
+            <div class="text-xs font-bold text-slate-900">Chief Admin</div>
+            <div class="text-[10px] text-slate-500">ops@califnco.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+
+    <!-- KPI Metric Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+      <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 mb-2">
+          <span class="text-xs font-semibold tracking-wide uppercase">Total Gross Sales</span>
+          <div class="w-8 h-8 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center">
+            <i data-lucide="indian-rupee" class="w-4 h-4"></i>
+          </div>
+        </div>
+        <div class="text-2xl font-black text-slate-900" id="stat-revenue">₹4,28,450</div>
+        <div class="flex items-center gap-1 text-xs text-emerald-600 font-semibold mt-2">
+          <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+          <span>+24.5% vs last month</span>
+        </div>
+      </div>
+
+      <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 mb-2">
+          <span class="text-xs font-semibold tracking-wide uppercase">All Active Orders</span>
+          <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+            <i data-lucide="package" class="w-4 h-4"></i>
+          </div>
+        </div>
+        <div class="text-2xl font-black text-slate-900" id="stat-orders">18 Orders</div>
+        <div class="text-xs text-indigo-600 font-medium mt-2">6 Dealer Wholesale Lots</div>
+      </div>
+
+      <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 mb-2">
+          <span class="text-xs font-semibold tracking-wide uppercase">Dealer Network</span>
+          <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <i data-lucide="briefcase" class="w-4 h-4"></i>
+          </div>
+        </div>
+        <div class="text-2xl font-black text-slate-900" id="stat-dealers">6 Verified</div>
+        <div class="text-xs text-amber-600 font-medium mt-2" id="stat-pending-dealers">2 Applications Pending</div>
+      </div>
+
+      <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 mb-2">
+          <span class="text-xs font-semibold tracking-wide uppercase">Service Desk</span>
+          <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
+            <i data-lucide="wrench" class="w-4 h-4"></i>
+          </div>
+        </div>
+        <div class="text-2xl font-black text-slate-900" id="stat-services">5 Tickets</div>
+        <div class="text-xs text-rose-600 font-medium mt-2">3 Technicians in Field</div>
+      </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <div class="flex items-center gap-2 border-b border-slate-200 mb-6 pb-2">
+      <button onclick="switchTab('orders')" id="tab-orders-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm bg-brand-600 text-white shadow-sm transition">
+        <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+        <span>Order Management</span>
+      </button>
+
+      <button onclick="switchTab('dealers')" id="tab-dealers-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition">
+        <i data-lucide="users" class="w-4 h-4"></i>
+        <span>Dealer Approvals</span>
+        <span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-1.5 py-0.5 rounded-full" id="dealer-badge-count">2</span>
+      </button>
+
+      <button onclick="switchTab('services')" id="tab-services-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition">
+        <i data-lucide="tool" class="w-4 h-4"></i>
+        <span>RO Service Desk</span>
+      </button>
+    </div>
+
+    <!-- TAB 1: ORDER MANAGEMENT -->
+    <section id="tab-orders" class="space-y-4">
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-extrabold text-slate-900">Active Customer & Dealer Orders</h2>
+            <p class="text-xs text-slate-500">Live order status dispatching and DTDC tracking updates</p>
+          </div>
+          <button onclick="addNewSimulatedOrder()" class="text-xs font-bold text-brand-600 bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded-lg border border-brand-200 transition flex items-center gap-1.5">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>Simulate Incoming Order</span>
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50/75 border-b border-slate-200 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                <th class="py-3 px-6">Order ID & Date</th>
+                <th class="py-3 px-6">Customer / Dealer</th>
+                <th class="py-3 px-6">Items Purchased</th>
+                <th class="py-3 px-6">Total Amount</th>
+                <th class="py-3 px-6">Current Status</th>
+                <th class="py-3 px-6 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="orders-tbody" class="divide-y divide-slate-100 text-sm">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: DEALER APPROVALS -->
+    <section id="tab-dealers" class="space-y-4 hidden">
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-100">
+          <h2 class="text-base font-extrabold text-slate-900">Dealer Verification & Wholesale Whitelist</h2>
+          <p class="text-xs text-slate-500">Approve or reject water purifier distributors, retail showrooms, and technicians</p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50/75 border-b border-slate-200 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                <th class="py-3 px-6">Business & Owner</th>
+                <th class="py-3 px-6">GSTIN & Location</th>
+                <th class="py-3 px-6">Applied Date</th>
+                <th class="py-3 px-6">Credit Limit</th>
+                <th class="py-3 px-6">Status</th>
+                <th class="py-3 px-6 text-right">Verification Action</th>
+              </tr>
+            </thead>
+            <tbody id="dealers-tbody" class="divide-y divide-slate-100 text-sm">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: RO SERVICE DESK -->
+    <section id="tab-services" class="space-y-4 hidden">
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-100">
+          <h2 class="text-base font-extrabold text-slate-900">Water Purifier Servicing & Technician Dispatch</h2>
+          <p class="text-xs text-slate-500">Assign certified field technicians, monitor repairs, and track customer resolution</p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50/75 border-b border-slate-200 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                <th class="py-3 px-6">Ticket ID & Customer</th>
+                <th class="py-3 px-6">Service Type</th>
+                <th class="py-3 px-6">Visit Schedule</th>
+                <th class="py-3 px-6">Assigned Technician</th>
+                <th class="py-3 px-6">Status</th>
+                <th class="py-3 px-6 text-right">Desk Action</th>
+              </tr>
+            </thead>
+            <tbody id="services-tbody" class="divide-y divide-slate-100 text-sm">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+    Califnco Water Systems India Pvt Ltd • Round 1 Technical Submission • Deployed on Vercel
+  </footer>
+
+  <script>
+    // Initial State & Data
+    let ordersData = [
+      {
+        id: 'CAL-ORD-8821',
+        date: '2026-10-22',
+        customer: 'Karthik Raja',
+        role: 'customer',
+        items: 'AquaShield Pro RO+UV (x1), TDS Meter (x1)',
+        total: 17315,
+        status: 'Shipped',
+        tracking: 'DTDC-IN-9812440'
+      },
+      {
+        id: 'CAL-DLR-5502',
+        date: '2026-10-23',
+        customer: 'Apex Water Solutions (Dealer)',
+        role: 'dealer',
+        items: 'Spun Sediment (x25), 100 GPD Pump (x10), Vontron 80GPD Membrane (x15)',
+        total: 48710,
+        status: 'Processing',
+        tracking: 'VRL-LOG-77210'
+      },
+      {
+        id: 'CAL-ORD-8710',
+        date: '2026-10-18',
+        customer: 'Ananya Sharma',
+        role: 'customer',
+        items: 'Annual Filter Overhaul Kit (x1)',
+        total: 3220,
+        status: 'Delivered',
+        tracking: 'BLUEDART-88291'
+      }
+    ];
+
+    let dealersData = [
+      {
+        id: 'DLR-APX-01',
+        business: 'Apex Water Solutions Pvt Ltd',
+        owner: 'Venkatesh Kumar',
+        phone: '+91 94440 98765',
+        gstin: '33AABCA1234D1Z5',
+        city: 'Chennai, TN',
+        applied: '2026-09-12',
+        credit: 250000,
+        status: 'approved'
+      },
+      {
+        id: 'DLR-ROY-02',
+        business: 'Royal Aqua Care & Spares',
+        owner: 'Mohamed Farooq',
+        phone: '+91 98422 65432',
+        gstin: '33BBXPF4321A1Z8',
+        city: 'Coimbatore, TN',
+        applied: '2026-09-28',
+        credit: 150000,
+        status: 'approved'
+      },
+      {
+        id: 'DLR-BLR-03',
+        business: 'Cauvery Pure Tech Spares',
+        owner: 'Manjunath Gowda',
+        phone: '+91 98801 44332',
+        gstin: '29ABCDE6789F1Z2',
+        city: 'Bengaluru, KA',
+        applied: '2026-10-23',
+        credit: 0,
+        status: 'pending'
+      },
+      {
+        id: 'DLR-HYD-04',
+        business: 'Krishna Delta Water Systems',
+        owner: 'Chaitanya Reddy',
+        phone: '+91 97033 11990',
+        gstin: '36AAACE5566G1Z9',
+        city: 'Hyderabad, TS',
+        applied: '2026-10-24',
+        credit: 0,
+        status: 'pending'
+      }
+    ];
+
+    let servicesData = [
+      {
+        id: 'SRV-2026-101',
+        customer: 'Karthik Raja (+91 98401 23456)',
+        type: 'Periodic RO Maintenance & Filter Replacement',
+        slot: '2026-10-27 (10:00 AM - 01:00 PM)',
+        tech: 'M. Ramesh (+91 98840 55112)',
+        status: 'Assigned'
+      },
+      {
+        id: 'SRV-2026-102',
+        customer: 'Dr. S. Subramanian (+91 94441 33221)',
+        type: 'Pump Noise & Leakage Rectification',
+        slot: '2026-10-25 (02:00 PM - 05:00 PM)',
+        tech: null,
+        status: 'Requested'
+      },
+      {
+        id: 'SRV-2026-098',
+        customer: 'Priya Sundaram (+91 98412 88776)',
+        type: 'Annual Maintenance Contract (AMC)',
+        slot: '2026-10-15',
+        tech: 'V. Prakash',
+        status: 'Completed'
+      }
+    ];
+
+    const technicians = [
+      { name: 'M. Ramesh', phone: '+91 98840 55112' },
+      { name: 'V. Prakash', phone: '+91 98400 99881' },
+      { name: 'S. Dinesh', phone: '+91 97911 22334' }
+    ];
+
+    function renderOrders() {
+      const tbody = document.getElementById('orders-tbody');
+      tbody.innerHTML = '';
+
+      ordersData.forEach(ord => {
+        const isDealer = ord.role === 'dealer';
+        const statusColors = {
+          'Placed': 'bg-slate-100 text-slate-700',
+          'Processing': 'bg-amber-100 text-amber-800',
+          'Shipped': 'bg-brand-100 text-brand-800',
+          'Out for Delivery': 'bg-purple-100 text-purple-800',
+          'Delivered': 'bg-emerald-100 text-emerald-800'
+        };
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50/60 transition';
+        tr.innerHTML = `
+          <td class="py-4 px-6">
+            <div class="font-bold text-brand-600">${ord.id}</div>
+            <div class="text-xs text-slate-400">${ord.date}</div>
+          </td>
+          <td class="py-4 px-6">
+            <div class="font-bold text-slate-800 flex items-center gap-1.5">
+              ${ord.customer}
+              ${isDealer ? '<span class="text-[10px] font-extrabold bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded">B2B</span>' : ''}
+            </div>
+            <div class="text-xs text-slate-400">${ord.tracking}</div>
+          </td>
+          <td class="py-4 px-6 text-xs text-slate-600 max-w-xs truncate">${ord.items}</td>
+          <td class="py-4 px-6 font-extrabold text-slate-900">₹${ord.total.toLocaleString('en-IN')}</td>
+          <td class="py-4 px-6">
+            <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-bold ${statusColors[ord.status] || 'bg-slate-100 text-slate-700'}">
+              ${ord.status}
+            </span>
+          </td>
+          <td class="py-4 px-6 text-right">
+            ${ord.status !== 'Delivered' ? `
+              <button onclick="advanceOrderStatus('${ord.id}')" class="text-xs font-bold bg-brand-600 text-white hover:bg-brand-700 px-3 py-1.5 rounded-lg transition shadow-sm">
+                Advance Status →
+              </button>
+            ` : `
+              <span class="text-xs font-bold text-emerald-600">✓ Completed</span>
+            `}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderDealers() {
+      const tbody = document.getElementById('dealers-tbody');
+      tbody.innerHTML = '';
+      let pendingCount = 0;
+
+      dealersData.forEach(dlr => {
+        if (dlr.status === 'pending') pendingCount++;
+        const isApproved = dlr.status === 'approved';
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50/60 transition';
+        tr.innerHTML = `
+          <td class="py-4 px-6">
+            <div class="font-bold text-slate-900">${dlr.business}</div>
+            <div class="text-xs text-slate-500">${dlr.owner} • ${dlr.phone}</div>
+          </td>
+          <td class="py-4 px-6">
+            <div class="font-semibold text-slate-800">${dlr.gstin}</div>
+            <div class="text-xs text-slate-400">${dlr.city}</div>
+          </td>
+          <td class="py-4 px-6 text-xs text-slate-600">${dlr.applied}</td>
+          <td class="py-4 px-6 font-bold text-indigo-600">₹${dlr.credit.toLocaleString('en-IN')}</td>
+          <td class="py-4 px-6">
+            <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-bold ${isApproved ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800'}">
+              ${dlr.status.toUpperCase()}
+            </span>
+          </td>
+          <td class="py-4 px-6 text-right">
+            ${!isApproved ? `
+              <div class="inline-flex items-center gap-1.5">
+                <button onclick="approveDealer('${dlr.id}')" class="text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-700 px-3 py-1.5 rounded-lg transition shadow-sm">
+                  Approve Wholesale
+                </button>
+                <button onclick="rejectDealer('${dlr.id}')" class="text-xs font-bold border border-rose-300 text-rose-600 hover:bg-rose-50 px-2.5 py-1.5 rounded-lg transition">
+                  Reject
+                </button>
+              </div>
+            ` : `
+              <span class="text-xs font-bold text-emerald-600">✓ Whitelisted</span>
+            `}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('dealer-badge-count').innerText = pendingCount;
+      document.getElementById('stat-pending-dealers').innerText = `${pendingCount} Applications Pending`;
+    }
+
+    function renderServices() {
+      const tbody = document.getElementById('services-tbody');
+      tbody.innerHTML = '';
+
+      servicesData.forEach(srv => {
+        const isDone = srv.status === 'Completed';
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50/60 transition';
+        tr.innerHTML = `
+          <td class="py-4 px-6">
+            <div class="font-bold text-brand-600">${srv.id}</div>
+            <div class="text-xs text-slate-500">${srv.customer}</div>
+          </td>
+          <td class="py-4 px-6 font-semibold text-slate-800">${srv.type}</td>
+          <td class="py-4 px-6 text-xs text-slate-600">${srv.slot}</td>
+          <td class="py-4 px-6">
+            ${srv.tech ? `
+              <span class="inline-flex items-center gap-1 text-xs font-bold text-slate-800">
+                <i data-lucide="user-check" class="w-3.5 h-3.5 text-brand-600"></i> ${srv.tech}
+              </span>
+            ` : `
+              <span class="text-xs text-amber-600 font-bold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Pending Assignment</span>
+            `}
+          </td>
+          <td class="py-4 px-6">
+            <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-bold ${isDone ? 'bg-emerald-100 text-emerald-700' : srv.tech ? 'bg-brand-100 text-brand-700' : 'bg-amber-100 text-amber-700'}">
+              ${srv.status}
+            </span>
+          </td>
+          <td class="py-4 px-6 text-right">
+            ${!srv.tech ? `
+              <button onclick="assignTechPrompt('${srv.id}')" class="text-xs font-bold bg-brand-600 text-white hover:bg-brand-700 px-3 py-1.5 rounded-lg transition shadow-sm">
+                Assign Tech
+              </button>
+            ` : !isDone ? `
+              <button onclick="completeService('${srv.id}')" class="text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-700 px-3 py-1.5 rounded-lg transition shadow-sm">
+                Mark Resolved
+              </button>
+            ` : `
+              <span class="text-xs font-bold text-emerald-600">✓ Resolved</span>
+            `}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      lucide.createIcons();
+    }
+
+    function advanceOrderStatus(id) {
+      const order = ordersData.find(o => o.id === id);
+      if (!order) return;
+      const states = ['Placed', 'Processing', 'Shipped', 'Out for Delivery', 'Delivered'];
+      const nextIndex = states.indexOf(order.status) + 1;
+      if (nextIndex < states.length) {
+        order.status = states[nextIndex];
+        renderOrders();
+      }
+    }
+
+    function approveDealer(id) {
+      const d = dealersData.find(x => x.id === id);
+      if (d) {
+        d.status = 'approved';
+        d.credit = 200000;
+        renderDealers();
+      }
+    }
+
+    function rejectDealer(id) {
+      const d = dealersData.find(x => x.id === id);
+      if (d) {
+        d.status = 'rejected';
+        renderDealers();
+      }
+    }
+
+    function assignTechPrompt(srvId) {
+      const srv = servicesData.find(s => s.id === srvId);
+      if (srv) {
+        const randomTech = technicians[Math.floor(Math.random() * technicians.length)];
+        srv.tech = `${randomTech.name} (${randomTech.phone})`;
+        srv.status = 'Assigned';
+        renderServices();
+      }
+    }
+
+    function completeService(srvId) {
+      const srv = servicesData.find(s => s.id === srvId);
+      if (srv) {
+        srv.status = 'Completed';
+        renderServices();
+      }
+    }
+
+    function addNewSimulatedOrder() {
+      const randomId = 'CAL-ORD-' + Math.floor(1000 + Math.random() * 9000);
+      ordersData.unshift({
+        id: randomId,
+        date: new Date().toISOString().split('T')[0],
+        customer: 'Siddharth Nair',
+        role: 'customer',
+        items: 'Califnco HydroPure Under-Sink RO (x1)',
+        total: 17999,
+        status: 'Processing',
+        tracking: 'DTDC-IN-' + Math.floor(1000000 + Math.random() * 9000000)
+      });
+      renderOrders();
+    }
+
+    function switchTab(tab) {
+      ['orders', 'dealers', 'services'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        document.getElementById(`tab-${t}-btn`).className = 'flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition';
+      });
+
+      document.getElementById(`tab-${tab}`).classList.remove('hidden');
+      document.getElementById(`tab-${tab}-btn`).className = 'flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm bg-brand-600 text-white shadow-sm transition';
+      lucide.createIcons();
+    }
+
+    // Initial render
+    renderOrders();
+    renderDealers();
+    renderServices();
+    lucide.createIcons();
+  </script>
+</body>
+</html>

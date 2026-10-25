@@ -1,0 +1,47 @@
+[
+  {
+    "id": "pur-001",
+    "name": "Califnco AquaShield Pro RO+UV+UF+TDS Water Purifier",
+    "category": "Purifier",
+    "price": 14499,
+    "highlight": "8-stage purification with active copper mineralizer and real-time digital TDS monitor.",
+    "idealFor": "Homes with high TDS water (up to 2000 ppm)",
+    "keywords": ["clean water", "copper water", "ro purifier", "healthy hydration"]
+  },
+  {
+    "id": "pur-002",
+    "name": "Califnco HydroPure Under-Sink RO System with Gooseneck Faucet",
+    "category": "Purifier",
+    "price": 17999,
+    "highlight": "Space-saving concealed modular kitchen RO with premium brushed brass faucet and 8L sealed tank.",
+    "idealFor": "Modern modular kitchens and apartments",
+    "keywords": ["under sink ro", "kitchen aesthetics", "pure water", "zero clutter"]
+  },
+  {
+    "id": "disp-001",
+    "name": "Califnco Bottom-Loading Hot, Cold & Normal RO Water Dispenser",
+    "category": "Dispenser",
+    "price": 18499,
+    "highlight": "Effortless bottom-bottle loading with triple temperature taps (92°C hot, 8°C chilled, and room temp).",
+    "idealFor": "Offices, clinics, and modern homes",
+    "keywords": ["water dispenser", "hot cold water", "bottom load", "office essentials"]
+  },
+  {
+    "id": "pump-002",
+    "name": "Califnco PowerFlow 100 GPD Heavy-Duty RO Booster Pump",
+    "category": "Pump",
+    "price": 2699,
+    "highlight": "100% pure electrolytic copper winding, dual Japanese ball bearings, delivering 135 PSI pressure.",
+    "idealFor": "Borewell water and high-rejection RO membranes",
+    "keywords": ["ro booster pump", "water pump", "spare parts", "technician choice"]
+  },
+  {
+    "id": "filt-003",
+    "name": "Califnco Vontron 80 GPD Polyamide Thin-Film RO Membrane",
+    "category": "Filter",
+    "price": 1899,
+    "highlight": "Certified 0.0001 micron polyamide TFC membrane eliminating heavy metals, arsenic, and 98% dissolved salts.",
+    "idealFor": "All domestic and light commercial RO systems",
+    "keywords": ["ro membrane", "0.0001 micron", "pure taste", "water filtration"]
+  }
+]

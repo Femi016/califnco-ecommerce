@@ -1,0 +1,12 @@
+{
+  "name": "califnco-admin-portal",
+  "version": "1.0.0",
+  "description": "Califnco Water Systems Admin & Operations Dashboard for Vercel",
+  "scripts": {
+    "start": "serve .",
+    "build": "echo 'Static Admin Portal Ready'"
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  }
+}
